@@ -18,7 +18,7 @@ classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "trai
               "teddy bear", "hair drier", "toothbrush"
               ]
 
-def detect_objects(img,stream=False , objects = None):
+def detect_objects(img,stream=False , objects = None , box=False , segment=False):
 
     if objects is None:
         objects = classNames
@@ -44,3 +44,23 @@ def detect_objects(img,stream=False , objects = None):
                 cv2.putText(img, currentClass , (max(0, x1), max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
 
     return detections
+    
+    if segment:
+        segmented_images = segment_objects(results)
+        return segmented_images
+    
+    elif box:
+        bounding_boxes = detect_boxes(results)
+        return bounding_boxes
+    
+    else:
+        detections = np.empty((0, 5)) 
+        return detections
+
+def segment_objects(results): 
+    segmented_images = []
+    return segmented_images
+
+def detect_boxes(results):
+    bounding_boxes = []
+    return bounding_boxes
