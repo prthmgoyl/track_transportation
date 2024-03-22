@@ -3,7 +3,7 @@ import setuptools
 with open("README.md","r",encoding="utf-8") as f:
     long_discription=f.read()
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 REPO_NAME = "track_transportation"
 AUTHOR_USER_NAME = "prthmgoyl"
@@ -12,7 +12,7 @@ SRC_REPO = "track_transportation"
 
 setuptools.setup(
     name=SRC_REPO,
-    version="0.0.5",
+    version="0.0.6",
     author=AUTHOR_USER_NAME ,
     author_email=AUTHOR_EMAIL,
     description="a small python project",

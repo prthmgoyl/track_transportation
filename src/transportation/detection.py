@@ -18,7 +18,7 @@ classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "trai
               "teddy bear", "hair drier", "toothbrush"
               ]
 
-def detect_objects(img,stream=False , objects = None , box=False , segment=False , conf=0.3):
+def detect_objects(img,stream=False , objects=None , box=False , segment=False , conf=0.3, text=True):
 
     if objects is None:
         objects = classNames
@@ -41,26 +41,55 @@ def detect_objects(img,stream=False , objects = None , box=False , segment=False
             if currentClass in objects and conff > conf:
                 currentArray = np.array([x1, y1, x2, y2, conff])
                 detections = np.vstack((detections, currentArray))
-                cv2.putText(img, currentClass , (max(0, x1), max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
-
-    return detections
+                if text:
+                 cv2.putText(img, currentClass , (max(0, x1), max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
     
     if segment:
         segmented_images = segment_objects(results)
-        return segmented_images
-    
-    elif box:
+        for i, segmented_image in enumerate(segmented_images):
+            img = cv2.addWeighted(img, 1, segmented_image, 0.5, 0)
+            #cv2.putText(img, f'Segment {i}', (10, 35 * (i+1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
+
+    if box:
         bounding_boxes = detect_boxes(results)
-        return bounding_boxes
+        for box in bounding_boxes:
+            x1, y1, x2, y2 = box['coordinates']
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            #cv2.putText(img, f"{box['class']} {box['confidence']}", (x1, max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
+
+    return img
     
-    else:
-        detections = np.empty((0, 5)) 
-        return detections
+# def detection(results):
+    
+#     return detections
 
 def segment_objects(results): 
     segmented_images = []
+    for r in results.pred:
+        img = r.imgs[0]  # Extracting the image
+        masks = r.pred[0]['masks']  # Extracting masks from the prediction
+        for mask in masks:
+            # Applying the mask to the image
+            masked_image = cv2.bitwise_and(img, img, mask=mask.astype(np.uint8))
+            segmented_images.append(masked_image)
     return segmented_images
 
 def detect_boxes(results):
     bounding_boxes = []
+    for r in results.pred:
+        boxes = r.boxes
+        for box in boxes:
+            x1, y1, x2, y2 = box.xyxy[0]
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+            w, h = x2 - x1, y2 - y1
+
+            conff = math.ceil((box.conf[0] * 100)) / 100
+            cls = int(box.cls[0])
+            currentClass = classNames[cls]
+            
+            bounding_boxes.append({
+                'class': currentClass,
+                'confidence': conff,
+                'coordinates': (x1, y1, x2, y2)
+            })
     return bounding_boxes
