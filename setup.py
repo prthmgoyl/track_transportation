@@ -32,5 +32,7 @@ setuptools.setup(
         'ultralytics',
         'cvzone',
         'tqdm',
+        'filterpy',
+        'scikit-image'
     ]
 )
