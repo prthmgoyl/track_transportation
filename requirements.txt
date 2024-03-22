@@ -6,3 +6,5 @@ matplotlib
 ultralytics
 cvzone
 tqdm
+filterpy
+scikit-image
