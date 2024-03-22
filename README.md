@@ -1,45 +1,47 @@
+Transportation Detection and Tracking CLI
 
-It makes it easier to install and manage dependencies for development and testing, separate from the dependencies required for production.
+This Python package, track_transportation, provides functionalities for detecting and tracking objects related to transportation in videos.
 
+Installation
+To install track_transportation, you can use pip:
 
-
-requirements.txt is used to specify the dependencies required to run the production code of a Python project, while requirements_dev.txt is used to specify the dependencies required for development and testing purposes.
-
-
-We use if for the testing in the python package testing against different version of the python 
-
-1. Install depedencies and packages 
-2. Run commands
-3. Its a combination of the (virtualenvwrapper and makefile)
-4. It creates a .tox
+bash
+pip install track_transportation
 
 
-it is being used for configuration the python project it is a alternative of the setup.cfg file. its containts configuration related to the build system
-such as the build tool used package name version author license and dependencies
+Usage
+Once installed, you can use the provided command-line interface (CLI) to detect and track transportation objects in a video.
+
+Here's how you can use it:
+
+bash
+track_transportation <video_path>
+
+Replace <video_path> with the path to your video file.
+
+Example
+Suppose you have a video file named traffic.mp4 that you want to analyze. You can run:
+
+bash
+track_transportation traffic.mp4
 
 
-In summary, setup.cfg is used by setuptools to configure the packaging and installation of a Python projec
+This command will process the video, detect transportation objects, track their movements, and visualize their paths. It will also output a new video with the detected objects and their paths annotated.
 
+Requirements
+This package requires the following dependencies:
 
-*types of testing*
-1. Automated testing 
-2. Manual testing
+numpy
+opencv-python
+torch
+matplotlib
+ultralytics
+cvzone
+sort
+tqdm
+These dependencies will be automatically installed when you install track_transportation.
 
-1. Unit testing
-2. Integration tests
-
-*Testing frameworks*
-
-1. pytest
-2. unittest
-3. robotframework
-4. selenium
-5. behave
-6. doctest
-
-
-
-1. pylint
-2. flake8(it is best because it containt 3 library pylint pycodestyle mccabe)
-3. pycodestyle
-
+Notes
+Ensure that you have a compatible version of Python installed on your system.
+It's recommended to use a virtual environment to manage your Python dependencies.
+Make sure that the input video file exists and is accessible to the CLI.
