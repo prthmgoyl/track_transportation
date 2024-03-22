@@ -18,7 +18,7 @@ classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "trai
               "teddy bear", "hair drier", "toothbrush"
               ]
 
-def detect_objects(img,stream=False , objects = None , box=False , segment=False):
+def detect_objects(img,stream=False , objects = None , box=False , segment=False , conf=0.3):
 
     if objects is None:
         objects = classNames
@@ -34,12 +34,12 @@ def detect_objects(img,stream=False , objects = None , box=False , segment=False
             x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
             w, h = x2 - x1, y2 - y1
 
-            conf = math.ceil((box.conf[0] * 100)) / 100
+            conff = math.ceil((box.conf[0] * 100)) / 100
             cls = int(box.cls[0])
             currentClass = classNames[cls]
 
-            if currentClass in objects and conf > 0.3:
-                currentArray = np.array([x1, y1, x2, y2, conf])
+            if currentClass in objects and conff > conf:
+                currentArray = np.array([x1, y1, x2, y2, conff])
                 detections = np.vstack((detections, currentArray))
                 cv2.putText(img, currentClass , (max(0, x1), max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
 
