@@ -12,7 +12,7 @@ SRC_REPO = "track_transportation"
 
 setuptools.setup(
     name=SRC_REPO,
-    version="0.0.1",
+    version="0.0.2",
     author=AUTHOR_USER_NAME ,
     author_email=AUTHOR_EMAIL,
     description="a small python project",
