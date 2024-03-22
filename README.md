@@ -9,39 +9,46 @@ bash
 pip install track_transportation
 
 
-Usage
+Usage:
 Once installed, you can use the provided command-line interface (CLI) to detect and track transportation objects in a video.
 
-Here's how you can use it:
+Detection Function:
+The detect_objects function in the detection.py module allows you to detect transportation objects in an image. Here's how you can use it in your Python script:
 
-bash
-track_transportation <video_path>
+python
 
-Replace <video_path> with the path to your video file.
+    from transportation.detection import detect_objects
+    import cv2
 
-Example
-Suppose you have a video file named traffic.mp4 that you want to analyze. You can run:
+    <!-- Load image -->
 
-bash
-track_transportation traffic.mp4
+    image = cv2.imread('image.jpg')
 
+    <!-- Perform object detection -->
 
-This command will process the video, detect transportation objects, track their movements, and visualize their paths. It will also output a new video with the detected objects and their paths annotated.
+    detections = detect_objects(image)
+
+    <!-- Process detections as needed -->
+
+    print("Detected objects:")
+    print(detections)
+
 
 Requirements
 This package requires the following dependencies:
 
-numpy
-opencv-python
-torch
-matplotlib
-ultralytics
-cvzone
-sort
-tqdm
+1. numpy
+2. opencv-python
+3. torch
+4. matplotlib
+5. ultralytics
+6. cvzone
+7. sort
+8. tqdm
+
 These dependencies will be automatically installed when you install track_transportation.
 
 Notes
-Ensure that you have a compatible version of Python installed on your system.
-It's recommended to use a virtual environment to manage your Python dependencies.
-Make sure that the input video file exists and is accessible to the CLI.
+1. Ensure that you have a compatible version of Python installed on your system.
+2. It's recommended to use a virtual environment to manage your Python dependencies.
+3. Make sure that the input video file exists and is accessible to the CLI.
