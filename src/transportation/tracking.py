@@ -1,6 +1,6 @@
 # tracking.py
 import numpy as np
-from sort import Sort
+from transportation.sort import Sort
 
 tracker = Sort(max_age=20, min_hits=3, iou_threshold=0.3)
 
