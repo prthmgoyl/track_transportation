@@ -51,7 +51,7 @@ def detect_objects(img,stream=False , objects=None , box=False , segment=False ,
             #cv2.putText(img, f'Segment {i}', (10, 35 * (i+1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA | cv2.FONT_ITALIC)
 
     if box:
-        bounding_boxes = detect_boxes(results)
+        bounding_boxes = detect_boxes(results,objects,conf)
         for box in bounding_boxes:
             x1, y1, x2, y2 = box['coordinates']
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
@@ -74,7 +74,7 @@ def segment_objects(results):
             segmented_images.append(masked_image)
     return segmented_images
 
-def detect_boxes(results):
+def detect_boxes(results,objects,conf):
     bounding_boxes = []
     for r in results:
         boxes = r.boxes
@@ -86,10 +86,10 @@ def detect_boxes(results):
             conff = math.ceil((box.conf[0] * 100)) / 100
             cls = int(box.cls[0])
             currentClass = classNames[cls]
-            
-            bounding_boxes.append({
-                'class': currentClass,
-                'confidence': conff,
-                'coordinates': (x1, y1, x2, y2)
-            })
+            if currentClass in objects and conff > conf:
+                bounding_boxes.append({
+                    'class': currentClass,
+                    'confidence': conff,
+                    'coordinates': (x1, y1, x2, y2)
+                })
     return bounding_boxes
