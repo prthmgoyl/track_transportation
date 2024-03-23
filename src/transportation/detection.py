@@ -65,7 +65,7 @@ def detect_objects(img,stream=False , objects=None , box=False , segment=False ,
 
 def segment_objects(results): 
     segmented_images = []
-    for r in results.pred:
+    for r in results:
         img = r.imgs[0]  # Extracting the image
         masks = r.pred[0]['masks']  # Extracting masks from the prediction
         for mask in masks:
@@ -76,7 +76,7 @@ def segment_objects(results):
 
 def detect_boxes(results):
     bounding_boxes = []
-    for r in results.pred:
+    for r in results:
         boxes = r.boxes
         for box in boxes:
             x1, y1, x2, y2 = box.xyxy[0]
